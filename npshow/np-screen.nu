@@ -1,7 +1,9 @@
-export def main [
+export def --env main [
     central_part
-    url = ''
+    --url = ''
 ] {
+    $env.PROMPT_COMMAND = {|| "\n> "}
+
     let np = 'nushell-prophet'
         | figlet -C utf8 -f phm-rounded
         | lines
