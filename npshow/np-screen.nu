@@ -2,6 +2,7 @@ export def --env main [
     central_part
     --url = ''
     --no_date
+    --lines_before: int = 2
 ] {
     $env.PROMPT_COMMAND = {|| "\n> "}
 
@@ -9,7 +10,7 @@ export def --env main [
         | figlet -C utf8 -f phm-rounded
         | lines
         | center
-        | prepend "\n\n"
+        | prepend ("\n" | str_repeat 2)
         | str join (char nl)
 
     let mod = $central_part
@@ -32,4 +33,9 @@ export def --env main [
 
 def center [] {
     fill -a center --width (term size).columns
+}
+
+def str_repeat [n: int] {
+    let $input = $in
+    1..$n | each {$input} | str join
 }
