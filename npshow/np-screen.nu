@@ -21,15 +21,13 @@ export def --env main [
     let $bottom_f = $url | fill -a center --width (term size).columns
     let $date_f = date now | format date %F | fill -a center --width (term size).columns
 
-    let $bottom_end = [
-            (ansi grey)
-            | append $bottom_f
-            | (char nl)
-            | if not $no_date {
-                append $date_f
-            } else {}
-            | append (ansi reset)
-        ]
+    let $bottom_end = (ansi grey)
+        | append $bottom_f
+        | append (char nl)
+        | if not $no_date {
+            append $date_f
+        } else {}
+        | append (ansi reset)
         | str join
 
     clear; print $np '' '' '' '' $mod '' '' '' '' $bottom_end
