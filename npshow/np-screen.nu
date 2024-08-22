@@ -3,32 +3,23 @@ export def --env main [
     --url = ''
     --no_date
     --lines_before: int = 2
+    --$lines_between: = 3
 ] {
     $env.PROMPT_COMMAND = {|| "\n> "}
 
-    let np = 'nushell-prophet'
-        | figlet -C utf8 -f phm-rounded
-        | lines
-        | center
-        | prepend ("\n" | str_repeat 2)
-        | str join (char nl)
+    clear;
 
-    let mod = $central_part
-        | table
-        | lines
-        | center
-        | str join (char nl)
-
-    let $bottom_end = (ansi grey)
-        | append ($url | center)
-        | append (char nl)
-        | if not $no_date {
-            append (date now | format date %F | center)
-        } else {}
-        | append (ansi reset)
-        | str join
-
-    clear; print $np '' '' '' '' $mod '' '' '' '' $bottom_end
+    ("\n" | str_repeat $lines_before)
+    | append ('nushell-prophet' | figlet -C utf8 -f phm-rounded | lines)
+    | append ("\n" | str_repeat $lines_between)
+    | append ($central_part | table | lines)
+    | append ("\n" | str_repeat $lines_between)
+    | append ($url | make_grey)
+    | if $no_date {} else {
+        append (date now | format date %F | make_grey)
+    }
+    | center
+    | str join (char nl)
 }
 
 def center [] {
@@ -38,4 +29,8 @@ def center [] {
 def str_repeat [n: int] {
     let $input = $in
     1..$n | each {$input} | str join
+}
+
+def make_grey [] {
+    $'(ansi grey)($in)(ansi reset)'
 }
