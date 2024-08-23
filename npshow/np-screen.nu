@@ -3,7 +3,7 @@ export def --env main [
     --url = ''
     --no_date
     --lines_before: int = 2
-    --$lines_between: = 3
+    --lines_between: int = 3
 ] {
     $env.PROMPT_COMMAND = {|| "\n> "}
 
