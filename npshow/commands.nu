@@ -1,11 +1,21 @@
-export def --env main [
+export def print-header [ ] {
+    str upcase | figlet -w 140 -f 'phm-largetype.flf' -C utf8 | lines | fill -a center --width ((term size).columns - 4) | table --index false
+};
+
+export def add-gradient [] {
+    let $input = $in
+    gradient-screen --no_date --echo --rows (((term size).rows - ($input | lines | length)) / 2 | into int)
+    | $in + $input + $in
+}
+
+export def --env np-screen [
     central_part
     --url = ''
     --no_date
     --lines_before: int = 2
     --lines_between: int = 3
 ] {
-    $env.PROMPT_COMMAND = {|| "\n> "}
+    $env.PROMPT_COMMAND = {|| "\n"}
 
     clear;
 
