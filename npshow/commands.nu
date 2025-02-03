@@ -15,7 +15,7 @@ export def --env np-screen [
     --lines_before: int = 2
     --lines_between: int = 3
 ] {
-    $env.PROMPT_COMMAND = {|| "\n"}
+    $env.PROMPT_COMMAND = {|| pwd | path basename | $"\n..\/($in)"}
 
     clear;
 
