@@ -30,6 +30,9 @@ export def --env np-screen [
     }
     | center
     | str join (char nl)
+    | print
+
+    sleep 1sec
 }
 
 def center [] {
